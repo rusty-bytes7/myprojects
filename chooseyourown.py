@@ -8,7 +8,7 @@ def intro():
     print("\nYou are a black long-haired cat named Rusty. You live a quiet, cushy life at your home with your family.")
     print("One day, your human goes to work and you notice the front door is left ajar.")
     print("\nDo you:\n  A. Stay put - outside is scary!\n  B. Wander over to inspect.")
-    choose_door()
+    choose_door() #this is a test to see if i can do git
 
 def choose_door():
     while True:

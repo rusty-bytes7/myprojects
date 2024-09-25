@@ -1,5 +1,4 @@
 #this is a choose your own adventure game about Rusty the cat!
-
 #import stuff
 from time import sleep
 import random
@@ -97,12 +96,15 @@ def library():
 #player chooses go right or does not enter door in graffiti wall- weird tree with runes
 def go_right():
 #maybe make the printed text easier to read
+    print("\n\n")
     print("----------")
     print("You decide to go right. As you explore, you see a big tree with strange markings. A big raven watches you from a branch.")
     print("\nAs you walk around the tree, inspecting the markings, you notice a tunnel under one of the tree's big roots.")
+    print("\n\n")
     print("----------")
     print("\nYou're just about to step into the tunnel, when all of a sudden you're lifted by the scruff off the ground by sharp claws, accompanied by the sound of wings beating.")
     print("\nThe raven squawks at you, 'Nobody may enter! Pass the test, pass the test!', as he flies high into the air.")
+    print("\n\n")
     print("----------")
     print("\nThe raven flies you to a clearing in some nearby woods. You get dropped into the clearing, and the raven alights on a branch. The air feels thick, and you feel uneasy.")
     print("\nThe raven chirps 'Something hunts you, but not all dangers are real.'")
@@ -132,6 +134,7 @@ def go_right():
 
 #standing ground in face of monster
 def standground():
+    print("\n\n")
     print("----------")
     print("\nYou see the creature's glowing red eyes in the trees.")
     print("\nThe hair on your back stands up, but something tells you to stay put.")
@@ -143,6 +146,7 @@ def standground():
 
 #running from monster- will not go anywhere, player has to fight monster
 def runfrom_monster():
+    print("\n\n")
     print("----------")
     print("\nPanic sets in, and you run as fast as you can. But no matter how quickly you move, the predator stays close.")
     print("\nEventually, you find yourself back where you started, exhausted and frightened.")
@@ -153,28 +157,94 @@ def runfrom_monster():
 
 #rusty has passed the test of bravery and is allowed to enter the tunnel
 def tunnel():
+    print("\n\n")
     print("----------")
     print("\nAs you begin your trek through the dark tunnel, you begin to see faint symbols on the walls.")
     print("\nYou realize the walls have the same faintly glowing runes as the tree.")
     print("\nThe light grows dimmer the farther you walk, and it begins to feel as though you've been pulled into another realm entirely.")
     print("\nSuddenly, the ground begins to shake. The floor underneath gives way, and to your surprise, you slide down into a hidden underground chamber.")
+    print("\n\n")
     print("----------")
-    print("\nAs you shake off the dust from your fur, you take note and see the underground cavern is filled with glowing muchrooms and crystals that illuminate the room.")
+    print("\nAs you shake off the dust from your fur, you take note and see the underground cavern is filled with glowing mushrooms and crystals that illuminate the room.")
     print("\nThere is a strange shimmering portal on the far wall.")
     print("\nYou try to go over and inspect, but suddenly, the shadows start to swirl and change shape.")
     print("\nYou realize you may have to fight your way to the portal.")
+    print("\nTwo weapons appear before you. Which do you choose?")
+    print("\nA. A sword that has a glowing blade. \nB. A whip that appears to move on its own.")
+    while True:
+        weaponchoice = input().lower()
+        if weaponchoice == "a":
+            sword()
+            break
+        elif weaponchoice == "b":
+            whip()
+            break
+        else:
+            print("Rusty doesn't understand! Please choose 'A' or 'B'.")
     
     #create monster to fight
-    shadowmonster = weakmonster()
-    shadowmonster.name = "Shadow Monster"
-    print(shadowmonster.strength)
+        shadowmonster = weak_monster()
+        
+    
 
 #create class of monsters
 class weak_monster:
     name = ""
     strength = random.randint(1,10)
+    attack = random.randint(1,10)
 
+#introduces rusty's hp level when fighting monster
+rustyhp = 25
+hpbar = "*" * rustyhp
 
+#Choose sword
+def sword():
+    print("\n")
+    print("----------")
+    
+    #print rusty's hp and monster hp
+    print("Rusty's HP: " + str(rustyhp) + " HP")
+    print(hpbar)
+    
+    #prints monsterhp bar from randomly selected strength
+    print("\nMonster HP: " + str(weak_monster.strength))
+    mhpbar = "+" * weak_monster.strength
+    print(mhpbar)
+    print ("\n\n")
+    print("Rusty swings his sword at the monster.")
+    
+    #select a random choice if sword hits or not
+    hitlist = ["hit", "miss"]
+    hit = random.choice(hitlist)
+    if hit == "hit":
+        print("\nRusty hits the monster with his sword!")
+        #rusty's sword does 5 damage
+        print("\nRusty deals 5 damage to the monster!")
+        #monster's hp is reduced by 5
+        weak_monster.strength -= 5
+        print("\nMonster HP: " + str(weak_monster.strength))
+    elif hit == "miss":
+        print("\nRusty misses the monster with his sword!")
+        print("\nMonster HP: " + str(weak_monster.strength))
+        
+#chose whip
+def whip():
+    print("\n")
+    print("----------")
+    
+    #print rusty's hp and monster hp
+    print("Rusty's HP: " + str(rustyhp) + " HP")
+    print(hpbar)
+
+    #prints monsterhp bar from randomly selected strength
+    print("\nMonster HP: " + str(weak_monster.strength))
+    mhpbar = "+" * weak_monster.strength
+    print(mhpbar)
+    print ("\n\n")
+
+    print("Rusty cracks his whip at the monster.")
+
+#MAIN PROGRAM
 def main():
     intro()
 

@@ -1,4 +1,5 @@
 #this is a choose your own adventure game about Rusty the cat!
+
 #import stuff
 from time import sleep
 import random
@@ -24,6 +25,14 @@ def choose_door():
         if answerdoor == "a":
             print("----------")
             print("Smart choice, although, not a very interesting one. \nGame Over.")
+            print("\nTry again?")
+            print("\nYes or No")
+            playagain = input().lower()
+            if playagain == "yes":
+                intro()
+            elif playagain == "no":
+                print("Thanks for playing!")
+                break
             return  # End the game if they choose to stay inside
         elif answerdoor == "b":
             print("----------")
@@ -91,7 +100,22 @@ def go_left():
 
 #rusty finds himself in a cavernous library- happens after going through doorway of graffiti wall
 def library():
-    pass #add more story here
+    print("\n\n")
+    print("----------")
+    print("You step into the grand library, the air filled with the scent of old books and dust. Towering shelves stretch as far as you can see, their tops disappearing into shadow. They seem to go on forever- maybe they do.")
+    print("\nA soft glow comes from scattered lanterns, casting flickering light onto the ornate floor tiles. The library is silent, but it feels like something is watching you.")
+    print("\nBooks shift quietly on their shelves, as though alive, and faint whispers echo through the cavernous room. Somewhere deeper inside, a strange humming sound calls to you.")
+    print("\nDo you explore further?")
+    print(" \nA. Yes, I'm curious. \n B. No, I'm too scared")
+    while True:
+        answer_explore = input().lower()
+        if answer_explore == "a":
+            print("----------")
+            print("\nYou cautiously step deeper into the library, your eyes narrowing as you make your way through the darkness.")
+            print("\nThe humming sound grows louder, and you can't help but feel a sense of unease. The whispers grow louder as well as you wind your way through the tall shelves, into what seems to be the middle of the library.")
+        elif answer_explore == "b":
+            print("----------")
+            print("\nInstead of exploring, you decide to go to the nearest bookshelf and flip through a book. You find a hidden compartment behind the book, and inside is a small, shiny object.")
 
 #player chooses go right or does not enter door in graffiti wall- weird tree with runes
 def go_right():
@@ -143,6 +167,7 @@ def standground():
     print("\n'*squawk* Very good, very brave!' he says.")
     print("\n'You passed the test!'")
     print ("\n \n")
+    sleep(4)
 
 #running from monster- will not go anywhere, player has to fight monster
 def runfrom_monster():
@@ -165,6 +190,7 @@ def tunnel():
     print("\nSuddenly, the ground begins to shake. The floor underneath gives way, and to your surprise, you slide down into a hidden underground chamber.")
     print("\n\n")
     print("----------")
+    sleep(4)
     print("\nAs you shake off the dust from your fur, you take note and see the underground cavern is filled with glowing mushrooms and crystals that illuminate the room.")
     print("\nThere is a strange shimmering portal on the far wall.")
     print("\nYou try to go over and inspect, but suddenly, the shadows start to swirl and change shape.")
@@ -199,9 +225,14 @@ hpbar = "*" * rustyhp
 
 #Choose sword
 def sword():
+    #introduces rusty's hp level when fighting monster
+    rustyhp = 25
+    hpbar = "*" * rustyhp
+    
     print("\n")
     print("----------")
-    
+    print("\nYou pick up the sword and examine it. It's a simple, yet powerful blade. You feel a rush as you realize you need to fight.")
+    print("\n")
     #print rusty's hp and monster hp
     print("Rusty's HP: " + str(rustyhp) + " HP")
     print(hpbar)
@@ -211,27 +242,56 @@ def sword():
     mhpbar = "+" * weak_monster.strength
     print(mhpbar)
     print ("\n\n")
-    print("Rusty swings his sword at the monster.")
+
     
-    #select a random choice if sword hits or not
-    hitlist = ["hit", "miss"]
-    hit = random.choice(hitlist)
-    if hit == "hit":
-        print("\nRusty hits the monster with his sword!")
-        #rusty's sword does 5 damage
-        print("\nRusty deals 5 damage to the monster!")
-        #monster's hp is reduced by 5
-        weak_monster.strength -= 5
-        print("\nMonster HP: " + str(weak_monster.strength))
-    elif hit == "miss":
-        print("\nRusty misses the monster with his sword!")
-        print("\nMonster HP: " + str(weak_monster.strength))
+    while weak_monster.strength > 0:
+        print("Rusty swings his sword at the shadow monster.")
+        #select a random choice if sword hits or not
+        hitlist = ["hit", "miss"]
+        hit = random.choice(hitlist)
+        #hit
+        if hit == "hit":
+            print("\nRusty hits the monster with his sword!")
+            
+            #rusty's sword does damage
+            damage = random.randint(1,5)
+            print(f"\nRusty deals {damage} damage to the shadow monster!")
+            
+            #monster's hp is reduced by damage
+            weak_monster.strength -= damage
+            if weak_monster.strength < 0:
+                weak_monster.strength = 0
+                break
+            print("\nMonster HP: " + str(weak_monster.strength))
+            print("Rusty's HP: " + str(rustyhp) + " HP")
+            sleep(3)
+    
+        elif hit == "miss":
+            print("\nRusty misses the shadow monster with his sword!")
+            #rusty takes damage
+            rustydamage = random.randint(1,5)
+            print(f"\nRusty takes {rustydamage} damage!")
+            rustyhp -= rustydamage
+            print(f"\nRusty's HP: {rustyhp}")
+            print("\nMonster HP: " + str(weak_monster.strength))
+            print("\n")
+            print("----------")
+            sleep(3)
+    
+    if weak_monster.strength == 0:
+        print("\nThe monster has been slain!")
+        print(f"\nRusty has {rustyhp} HP left.")
         
 #chose whip
 def whip():
+    #introduces rusty's hp level when fighting monster
+    rustyhp = 25
+    hpbar = "*" * rustyhp
+
     print("\n")
     print("----------")
-    
+    print("\nYou pick up the whip and examine it. It appears to move on its own, and you feel a rush as you realize you need to fight.")
+    print("\n")
     #print rusty's hp and monster hp
     print("Rusty's HP: " + str(rustyhp) + " HP")
     print(hpbar)
@@ -241,8 +301,45 @@ def whip():
     mhpbar = "+" * weak_monster.strength
     print(mhpbar)
     print ("\n\n")
+    
 
-    print("Rusty cracks his whip at the monster.")
+    while weak_monster.strength > 0:
+        #select a random choice if sword hits or not
+        hitlist = ["hit", "miss"]
+        hit = random.choice(hitlist)
+        print("Rusty cracks the whip at the shadow monster.")
+        #hit
+        if hit == "hit":
+            print("\nRusty hits the monster with his sword!")
+
+            #rusty's sword does damage
+            damage = random.randint(1,5)
+            print(f"\nRusty deals {damage} damage to the shadow monster!")
+
+            #monster's hp is reduced by damage
+            weak_monster.strength -= damage
+            if weak_monster.strength < 0:
+                weak_monster.strength = 0
+                break
+            print("\nMonster HP: " + str(weak_monster.strength))
+            print("Rusty's HP: " + str(rustyhp) + " HP")
+            sleep(3)
+
+        elif hit == "miss":
+            print("\nRusty misses the shadow monster with his whip!")
+            #rusty takes damage
+            rustydamage = random.randint(1,5)
+            print(f"\nRusty takes {rustydamage} damage!")
+            rustyhp -= rustydamage
+            print(f"\nRusty's HP: {rustyhp}")
+            print("\nMonster HP: " + str(weak_monster.strength))
+            print("\n")
+            print("----------")
+            sleep(3)
+
+    if weak_monster.strength == 0:
+        print("\nThe monster has been slain!")
+        print(f"\nRusty has {rustyhp} HP left.")
 
 #MAIN PROGRAM
 def main():

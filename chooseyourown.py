@@ -133,7 +133,7 @@ def go_right():
     print("\nThe raven drops you into a clearing in the woods. It perches on a branch, watching.")
     print("\n'Something hunts you,' the raven chirps, 'but not all dangers are real.'")
     print("\nThe clearing grows dark. A large, shadowy creature moves in the trees, growling—a deep sound that chills you.")
-    print("It's bigger than any dog you've seen, circling closer, still hidden in the shadows.")
+    print("It's bigger than any dog you've seen, circling closer, still hidden in the shadows...")
 
     # Continue the story or add another function
     print("\nWhat do you do?")

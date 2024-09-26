@@ -184,6 +184,7 @@ def runfrom_monster():
     print("\nWhat do you do?")
     print("\nA. Stand your ground. \nB. Run.")
 
+
 #rusty has passed the test of bravery and is allowed to enter the tunnel
 def tunnel():
     print("\n\n")
@@ -204,14 +205,10 @@ def tunnel():
     while True:
         weaponchoice = input().lower()
         if weaponchoice == "a":
-            rustyhp = 25
-            hpbar = "*" * rustyhp
-            sword()
+            sword(rustyhp,hpbar)
             break
         elif weaponchoice == "b":
-            rustyhp = 25
-            hpbar = "*" * rustyhp
-            whip()
+            whip(rustyhp,hpbar)
             break
         else:
             print("Rusty doesn't understand! Please choose 'A' or 'B'.")
@@ -226,11 +223,14 @@ class weak_monster:
     name = ""
     strength = random.randint(1,10)
     attack = random.randint(1,10)
+    defense = random.randint(1,10)
+
+#introduces rusty's hp level when fighting monster
+rustyhp = 25
+hpbar = "*" * rustyhp
 
 #Choose sword
-def sword():
-    #introduces rusty's hp level when fighting monster
-    
+def sword(rustyhp,hpbar):
     print("\n")
     print("----------")
     print("\nYou pick up the sword and examine it. It's a simple, yet powerful blade. You feel a rush as you realize you need to fight.")
@@ -287,13 +287,25 @@ def sword():
         #player chooses defend
         elif attackordefend == "b":
             print("\nThe monster used its attack!")
-        
+            #monster's attack
+            mattack = weak_monster.attack
+            print(f"\nThe monster hits Rusty for {mattack} damage!")
+            #rusty takes damage
+            rustydamage = mattack
+            rustyhp -= rustydamage
+            print(f"\nRusty's HP: {rustyhp}")
+            print("\nMonster HP: " + str(weak_monster.strength))
+            print("\n")
+            print("----------")
+            sleep(3)
+
+
         if weak_monster.strength == 0:
             print("\nThe monster has been slain!")
             print(f"\nRusty has {rustyhp} HP left.")
         
 #chose whip
-def whip():
+def whip(rustyhp, hpbar):
     #introduces rusty's hp level when fighting monster
     rustyhp = 25
     hpbar = "*" * rustyhp
@@ -320,7 +332,7 @@ def whip():
         print("Rusty cracks the whip at the shadow monster.")
         #hit
         if hit == "hit":
-            print("\nRusty hits the monster with his sword!")
+            print("\nRusty hits the monster with his whip!")
 
             #rusty's sword does damage
             damage = random.randint(1,5)

@@ -9,9 +9,12 @@ def spacer():
     print ("\n\n")
     print("----------")
 
+#pause function to have player press enter to advance code
 def pause():
-    input("\n(Press any key to continue.)")
+    input("\n(Press Enter to continue.)")
 
+#create player inventory
+inventory = []
 
 #start the game
 def intro():
@@ -74,7 +77,7 @@ def go_left():
     spacer()
     print("\nYou decide to go left. As you walk, you find a hidden alley with mysterious glowing graffiti. What could it mean?")
     print("\nYou walk up to the graffiti and inspect it by sniffing. As your nose touches the wall, you hear a noise. The bricks have started to shift!")
-    sleep(5)
+    pause()
     spacer()
     print("\nYou jump back in shock, ears down. The bricks have shifted to reveal a secret doorway.")
     print("\nYou smell cool, damp, air coming through the doorway. It's dark and you can't see a thing, no matter how much you strain your eyes.")
@@ -89,12 +92,12 @@ def go_left():
             print("You gingerly step through the open door, feeling a rush of chilly air surround you.")
             print("\nAs you step forward, you hear the bricks shift again, and you are startled to discover that they've closed you inside.")
             print("\nNo turning back now.")
-            sleep(5)
+            pause()
             spacer()
             print("You use your whiskers and your sense of smell to navigate down a pitch-black hallway. It's narrow, but you're able to fit.")
             print("\nYou start to wonder if you'll ever make it out of this strange tunnnel, when suddenly you see a faint light in the distance.")
             print("\nYou pick up the pace, and the light grows brighter and warmer before you.")
-            sleep(5)
+            pause()
             spacer()
             print("\nYou follow the light until you reach a cavernous room, and realize you're in a gigantic library.")
             library()
@@ -118,7 +121,7 @@ def library():
     print("\nA soft glow comes from scattered lanterns, casting flickering light onto the ornate floor tiles. The library is silent, but it feels like something is watching you.")
     print("\nBooks shift quietly on their shelves, as though alive, and faint whispers echo through the cavernous room. Somewhere deeper inside, a strange humming sound calls to you.")
     print("\nDo you explore further?")
-    print(" \nA. Yes, I'm curious. \n B. No, I'm too scared.")
+    print(" \nA. Yes, I'm curious. \nB. No, I'm too scared.")
     while True:
         answer_explore = input().lower()
         if answer_explore == "a":
@@ -136,16 +139,17 @@ def go_right():
     print("You go right and find a tree covered in strange markings. A large raven watches you from above.")
     print("\nAs you examine the markings, you spot a tunnel beneath the tree's roots.")
     spacer()
-    sleep(5)
+    pause()
     print("\nJust as you're about to enter, sharp claws lift you off the ground. The raven's wings beat furiously as it carries you into the air.")
     print("\n'Stop! Pass the test!' the raven screeches, flying higher.")
     spacer()
-    sleep(5)
+    pause()
     print("\nThe raven drops you into a clearing in the woods. It perches on a branch, watching.")
     print("\n'Something hunts you,' the raven chirps, 'but not all dangers are real.'")
     print("\nThe clearing grows dark. A large, shadowy creature moves in the trees, growling—a deep sound that chills you.")
     print("It's bigger than any dog you've seen, circling closer, still hidden in the shadows...")
-    sleep(5)
+    spacer()
+    pause()
 
     # Continue the story or add another function
     print("\nWhat do you do?")
@@ -160,7 +164,7 @@ def go_right():
             print("\nThe raven leads you back to the base of the tree with the strange runes. He allows you to enter the tunnel.")
             print("\n'Good luck, brave one,' the raven squawks.")
             print("\nYou step into the tunnel. It's very dark, and it smells like fresh earth.")
-            sleep(5)
+            pause()
             tunnel()
             break
         
@@ -179,8 +183,9 @@ def standground():
     print("\nThe raven lands before you.")
     print("\n'Very good, very brave!' it squawks.")
     print("\n'You passed the test!'")
+    print("\nYou have passed the raven's test of bravery and it seems as though you will be permitted to enter the tunnel.")
     spacer()
-    sleep(5)
+    pause()
 
 #running from monster- will not go anywhere, player has to fight monster
 def runfrom_monster():
@@ -189,7 +194,7 @@ def runfrom_monster():
     print("\nEventually, you find yourself back where you started, exhausted and frightened.")
     print('\n"Running will not save you," the bird warns. "Try again. Face your fears."')
     spacer()
-    sleep(5)
+    pause()
     print("\nWhat do you do?")
     print("\nA. Stand your ground. \nB. Run.")
 
@@ -202,13 +207,13 @@ def tunnel():
     print("\nThe light grows dimmer the farther you walk, and it begins to feel as though you've been pulled into another realm entirely.")
     print("\nSuddenly, the ground begins to shake. The floor underneath gives way, and to your surprise, you slide down into a hidden underground chamber.")
     spacer()
-    sleep(5)
+    pause()
     print("\nAs you shake off the dust from your fur, you take note and see the underground cavern is filled with glowing mushrooms and crystals that illuminate the room.")
     print("\nThere is a strange shimmering portal on the far wall.")
     print("\nYou try to go over and inspect, but suddenly, the shadows start to swirl and change shape.")
     print("\nYou realize you may have to fight your way to the portal.")
     spacer()
-    sleep(5)
+    pause()
     print("\nTwo weapons magically appear before you. Which do you choose?")
     print("\nA. A sword that has a glowing blade. \nB. A whip that appears to move on its own.")
     while True:
@@ -279,7 +284,7 @@ def sword(rustyhp,hpbar):
                     break
                 print("\nMonster HP: " + str(weak_monster.strength))
                 print("Rusty's HP: " + str(rustyhp) + " HP")
-                sleep(3)
+                pause()
         
             elif hit == "miss":
                 print("\nRusty misses the shadow monster with his sword!")
@@ -290,25 +295,38 @@ def sword(rustyhp,hpbar):
                 print(f"\nRusty's HP: {rustyhp}")
                 print("\nMonster HP: " + str(weak_monster.strength))
                 spacer()
-                sleep(3)
+                pause()
         #player chooses defend
         elif attackordefend == "b":
-            print("\nThe monster used its attack!")
-            #monster's attack
-            mattack = weak_monster.attack
-            print(f"\nThe monster hits Rusty for {mattack} damage!")
-            #rusty takes damage
-            rustydamage = mattack
-            rustyhp -= rustydamage
-            print(f"\nRusty's HP: {rustyhp}")
-            print("\nMonster HP: " + str(weak_monster.strength))
-            spacer()
-            sleep(3)
+            #random choice when defending of the monster hitting or missing
+            defense_list = ["m-hit", "m-miss"]
+            defense = random.choice(defense_list)
+            #monster hits
+            if defense == "m-hit":
+                print("\nThe monster used its attack!")
+                #monster attacks and hit's rusty
+                mattack = weak_monster.attack
+                print(f"\nThe monster hits Rusty for {mattack} damage!")
+                #rusty takes damage
+                rustydamage = mattack
+                rustyhp -= rustydamage
+                print(f"\nRusty's HP: {rustyhp}")
+                print("\nMonster HP: " + str(weak_monster.strength))
+                spacer()
+                pause()
+            #monster misses
+            elif defense == "m-miss":
+                #rusty takes no damage
+                print("\nRusty defends against the monster's attack!")
+                print("\nMonster HP: " + str(weak_monster.strength))
+                print("Rusty's HP: " + str(rustyhp) + " HP")
+        else:
+            print("Rusty doesn't understand! Please choose 'A' or 'B'.")
 
-
-        if weak_monster.strength == 0:
-            print("\nThe monster has been slain!")
-            print(f"\nRusty has {rustyhp} HP left.")
+    #checks to see if the monster has been slain
+    if weak_monster.strength <= 0:
+        print("\nThe monster has been slain!")
+        print(f"\nRusty has {rustyhp} HP left.")
         
 #chose whip
 def whip(rustyhp, hpbar):
@@ -350,7 +368,7 @@ def whip(rustyhp, hpbar):
                 break
             print("\nMonster HP: " + str(weak_monster.strength))
             print("Rusty's HP: " + str(rustyhp) + " HP")
-            sleep(3)
+            pause()
 
         elif hit == "miss":
             print("\nRusty misses the shadow monster with his whip!")
@@ -361,9 +379,9 @@ def whip(rustyhp, hpbar):
             print(f"\nRusty's HP: {rustyhp}")
             print("\nMonster HP: " + str(weak_monster.strength))
             spacer()
-            sleep(3)
+            pause()
 
-    if weak_monster.strength == 0:
+    if weak_monster.strength <= 0:
         print("\nThe monster has been slain!")
         print(f"\nRusty has {rustyhp} HP left.")
 

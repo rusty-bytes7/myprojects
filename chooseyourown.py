@@ -427,7 +427,24 @@ def amulet():
     print('Can you trust this amulet?')
     spacer()
     pause()
-    print('')
+    amulet_choice()
+
+def amulet_choice():
+       spacer()
+       print("Do you:")
+       print("A. Trust the amulet and embrace its power?")
+       print("B. Discard the amulet, fearing its unknown influence?")
+
+       choice = input().lower()
+       if choice == "a":
+           # Path where the player trusts the amulet
+           # ...
+       elif choice == "b":
+           # Path where the player discards the amulet
+           # ...
+       else:
+           print("Invalid choice. Please select A or B.")
+           amulet_choice()  # Re-prompt for input
 
 
 #MAIN PROGRAM

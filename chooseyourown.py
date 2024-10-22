@@ -131,6 +131,8 @@ def library():
         elif answer_explore == "b":
             spacer()
             print("\nInstead of exploring, you decide to go to the nearest bookshelf and flip through a book. You find a hidden compartment behind the book, and inside is a small, shiny object.")
+            pause()
+            amulet()
 
 #player chooses go right or does not enter door in graffiti wall- weird tree with runes
 def go_right():
@@ -180,6 +182,7 @@ def standground():
     print("\nYou spot glowing red eyes in the trees.")
     print("\nThe fur on your back rises, but something urges you to stay still.")
     print("\nYou hiss as the dark figure rushes toward you—then vanishes in a puff of smoke.")
+    pause()
     print("\nThe raven lands before you.")
     print("\n'Very good, very brave!' it squawks.")
     print("\n'You passed the test!'")
@@ -349,41 +352,83 @@ def whip(rustyhp, hpbar):
     
 
     while weak_monster.strength > 0:
-        #select a random choice if sword hits or not
-        hitlist = ["hit", "miss"]
-        hit = random.choice(hitlist)
-        print("Rusty cracks the whip at the shadow monster.")
-        #hit
-        if hit == "hit":
-            print("\nRusty hits the monster with his whip!")
+        #ask player if they want to hit or defend
+        print("Should Rusty A. Attempt an attack? or B. Defend?")
+        attackordefend = input().lower()
+        #player chooses to attempt an attack
+        if attackordefend == "a":
+            print("Rusty cracks the whip at the shadow monster.")
+            #select a random choice if sword hits or not
+            hitlist = ["hit", "miss"]
+            hit = random.choice(hitlist)
+            #hit
+            if hit == "hit":
+                print("\nRusty hits the monster with the whip!")
+                
+                #rusty's sword does damage
+                damage = random.randint(1,5)
+                print(f"\nRusty deals {damage} damage to the shadow monster!")
+                
+                #monster's hp is reduced by damage
+                weak_monster.strength -= damage
+                if weak_monster.strength < 0:
+                    weak_monster.strength = 0
+                    break
+                print("\nMonster HP: " + str(weak_monster.strength))
+                print("Rusty's HP: " + str(rustyhp) + " HP")
+                pause()
+        
+            elif hit == "miss":
+                print("\nRusty misses the shadow monster with the whip!")
+                #rusty takes damage
+                rustydamage = random.randint(1,5)
+                print(f"\nRusty takes {rustydamage} damage!")
+                rustyhp -= rustydamage
+                print(f"\nRusty's HP: {rustyhp}")
+                print("\nMonster HP: " + str(weak_monster.strength))
+                spacer()
+                pause()
+        #player chooses defend
+        elif attackordefend == "b":
+            #random choice when defending of the monster hitting or missing
+            defense_list = ["m-hit", "m-miss"]
+            defense = random.choice(defense_list)
+            #monster hits
+            if defense == "m-hit":
+                print("\nThe monster used its attack!")
+                #monster attacks and hit's rusty
+                mattack = weak_monster.attack
+                print(f"\nThe monster hits Rusty for {mattack} damage!")
+                #rusty takes damage
+                rustydamage = mattack
+                rustyhp -= rustydamage
+                print(f"\nRusty's HP: {rustyhp}")
+                print("\nMonster HP: " + str(weak_monster.strength))
+                spacer()
+                pause()
+            #monster misses
+            elif defense == "m-miss":
+                #rusty takes no damage
+                print("\nRusty defends against the monster's attack!")
+                print("\nMonster HP: " + str(weak_monster.strength))
+                print("Rusty's HP: " + str(rustyhp) + " HP")
+        else:
+            print("Rusty doesn't understand! Please choose 'A' or 'B'.")
 
-            #rusty's sword does damage
-            damage = random.randint(1,5)
-            print(f"\nRusty deals {damage} damage to the shadow monster!")
-
-            #monster's hp is reduced by damage
-            weak_monster.strength -= damage
-            if weak_monster.strength < 0:
-                weak_monster.strength = 0
-                break
-            print("\nMonster HP: " + str(weak_monster.strength))
-            print("Rusty's HP: " + str(rustyhp) + " HP")
-            pause()
-
-        elif hit == "miss":
-            print("\nRusty misses the shadow monster with his whip!")
-            #rusty takes damage
-            rustydamage = random.randint(1,5)
-            print(f"\nRusty takes {rustydamage} damage!")
-            rustyhp -= rustydamage
-            print(f"\nRusty's HP: {rustyhp}")
-            print("\nMonster HP: " + str(weak_monster.strength))
-            spacer()
-            pause()
-
+    #checks to see if the monster has been slain
     if weak_monster.strength <= 0:
         print("\nThe monster has been slain!")
         print(f"\nRusty has {rustyhp} HP left.")
+
+def amulet():
+    spacer()
+    print("You look closer to see that there is a small silver cat figurine on a chain inside the book's compartment. You feel compelled to take it with you.")
+    print('As you put the chain around your neck, you feel a warm sensation flow through your body. You feel safer somehow.')
+    print('Can you trust this amulet?')
+    spacer()
+    pause()
+    print('')
+
 
 #MAIN PROGRAM
 def main():

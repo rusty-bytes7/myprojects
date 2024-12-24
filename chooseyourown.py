@@ -101,7 +101,6 @@ def go_left():
             spacer()
             print("\nYou follow the light until you reach a cavernous room, and realize you're in a gigantic library.")
             library()
-            # Continue the story here or add another function
             break
         
         #not going through the door leads player other way to tree
@@ -128,10 +127,12 @@ def library():
             spacer()
             print("\nYou cautiously step deeper into the library, your eyes narrowing as you make your way through the darkness.")
             print("\nThe humming sound grows louder, and you can't help but feel a sense of unease. The whispers grow louder as well as you wind your way through the tall shelves, into what seems to be the middle of the library.")
+            print("\nYou come across a large, ancient tome that seems to be glowing faintly. You reach out to touch it, and as you do, the book opens on its own.")
+            print("\n When you open the ancient book, its pages are blank at first. Suddenly, glowing runes appear, and a voice echoes: 'Traveler, this is the Book of Portals. Place your paw on a page, and it will guide you to the unknown.'")
         elif answer_explore == "b":
             spacer()
             print("\nInstead of exploring, you decide to go to the nearest bookshelf and flip through a book. You find a hidden compartment behind the book, and inside is a small, shiny object.")
-
+            print("\nYou pick up the object and realize it's an amulet in the shape of a cat- like you!. You pocket it, and decide to leave the library.")
 #player chooses go right or does not enter door in graffiti wall- weird tree with runes
 def go_right():
     # maybe make the printed text easier to read
@@ -219,10 +220,12 @@ def tunnel():
     while True:
         weaponchoice = input().lower()
         if weaponchoice == "a":
-            sword(rustyhp,hpbar)
+            fighthp = sword(rustyhp,hpbar)
+            portal(fighthp)
             break
         elif weaponchoice == "b":
-            whip(rustyhp,hpbar)
+            fighthp = whip(rustyhp,hpbar)
+            portal(fighthp)
             break
         else:
             print("Rusty doesn't understand! Please choose 'A' or 'B'.")
@@ -310,15 +313,20 @@ def sword(rustyhp,hpbar):
                 #rusty takes damage
                 rustydamage = mattack
                 rustyhp -= rustydamage
+                #if damage is 0, fight ends
+                if rustyhp < 0:
+                    rustyhp = 0
+                    continue
                 print(f"\nRusty's HP: {rustyhp}")
-                print("\nMonster HP: " + str(weak_monster.strength))
+                print("\nMonster HP: " + str(weak_monster.strength), " HP")
                 spacer()
                 pause()
             #monster misses
             elif defense == "m-miss":
                 #rusty takes no damage
+                print("\nThe monster lets our a fearsome roar.")
                 print("\nRusty defends against the monster's attack!")
-                print("\nMonster HP: " + str(weak_monster.strength))
+                print("\nMonster HP: " + str(weak_monster.strength), " HP")
                 print("Rusty's HP: " + str(rustyhp) + " HP")
         else:
             print("Rusty doesn't understand! Please choose 'A' or 'B'.")
@@ -327,63 +335,138 @@ def sword(rustyhp,hpbar):
     if weak_monster.strength <= 0:
         print("\nThe monster has been slain!")
         print(f"\nRusty has {rustyhp} HP left.")
+    rustyfighthp = rustyhp
+    return(rustyfighthp)
         
 #chose whip
 def whip(rustyhp, hpbar):
-    #introduces rusty's hp level when fighting monster
-    rustyhp = 25
-    hpbar = "*" * rustyhp
-
     spacer()
-    print("\nYou pick up the whip and examine it. It appears to move on its own, and you feel a rush as you realize you need to fight.")
+    print("\nYou pick up the whip and examine it. It appears to move on its own. You feel a rush as you realize you need to fight.")
     print("\n")
     #print rusty's hp and monster hp
     print("Rusty's HP: " + str(rustyhp) + " HP")
     print(hpbar)
-
+    
     #prints monsterhp bar from randomly selected strength
     print("\nMonster HP: " + str(weak_monster.strength))
     mhpbar = "+" * weak_monster.strength
     print(mhpbar)
     print ("\n\n")
+
     
-
     while weak_monster.strength > 0:
-        #select a random choice if sword hits or not
-        hitlist = ["hit", "miss"]
-        hit = random.choice(hitlist)
-        print("Rusty cracks the whip at the shadow monster.")
-        #hit
-        if hit == "hit":
-            print("\nRusty hits the monster with his whip!")
+        #ask player if they want to hit or defend
+        print("Should Rusty A. Attempt an attack? or B. Defend?")
+        attackordefend = input().lower()
+        #player chooses to attempt an attack
+        if attackordefend == "a":
+            print("Rusty cracks his whip at the shadow monster.")
+            #select a random choice if sword hits or not
+            hitlist = ["hit", "miss"]
+            hit = random.choice(hitlist)
+            #hit
+            if hit == "hit":
+                print("\nRusty hits the shadow monster!")
+                
+                #rusty's whip[] does damage
+                damage = random.randint(1,5)
+                print(f"\nRusty deals {damage} damage to the shadow monster!")
+                
+                #monster's hp is reduced by damage
+                weak_monster.strength -= damage
+                if weak_monster.strength < 0:
+                    weak_monster.strength = 0
+                    break
+                print("\nMonster HP: " + str(weak_monster.strength))
+                print("Rusty's HP: " + str(rustyhp) + " HP")
+                pause()
+        
+            elif hit == "miss":
+                print("\nRusty misses the shadow monster with his whip!")
+                #rusty takes damage, but does not go below 0
+                rustydamage = random.randint(1,5)
+                print(f"\nRusty takes {rustydamage} damage!")
+                rustyhp -= rustydamage
+                if rustyhp < 0:
+                    rustyhp = 0
+                    continue
+                print(f"\nRusty's HP: {rustyhp}")
+                print("\nMonster HP: " + str(weak_monster.strength))
+                spacer()
+                pause()
+        #player chooses defend
+        elif attackordefend == "b":
+            #random choice when defending of the monster hitting or missing
+            defense_list = ["m-hit", "m-miss"]
+            defense = random.choice(defense_list)
+            #monster hits
+            if defense == "m-hit":
+                print("\nThe monster used its attack!")
+                #monster attacks and hit's rusty
+                mattack = weak_monster.attack
+                print(f"\nThe monster hits Rusty for {mattack} damage!")
+                #rusty takes damage
+                rustydamage = mattack
+                rustyhp -= rustydamage
+                print(f"\nRusty's HP: {rustyhp}")
+                print("\nMonster HP: " + str(weak_monster.strength), " HP")
+                spacer()
+                pause()
+            #monster misses
+            elif defense == "m-miss":
+                #rusty takes no damage
+                print("\nThe monster lets our a fearsome roar.")
+                print("\nRusty defends against the monster's attack!")
+                print("\nMonster HP: " + str(weak_monster.strength), " HP")
+                print("Rusty's HP: " + str(rustyhp) + " HP")
+        else:
+            print("Rusty doesn't understand! Please choose 'A' or 'B'.")
 
-            #rusty's sword does damage
-            damage = random.randint(1,5)
-            print(f"\nRusty deals {damage} damage to the shadow monster!")
-
-            #monster's hp is reduced by damage
-            weak_monster.strength -= damage
-            if weak_monster.strength < 0:
-                weak_monster.strength = 0
-                break
-            print("\nMonster HP: " + str(weak_monster.strength))
-            print("Rusty's HP: " + str(rustyhp) + " HP")
-            pause()
-
-        elif hit == "miss":
-            print("\nRusty misses the shadow monster with his whip!")
-            #rusty takes damage
-            rustydamage = random.randint(1,5)
-            print(f"\nRusty takes {rustydamage} damage!")
-            rustyhp -= rustydamage
-            print(f"\nRusty's HP: {rustyhp}")
-            print("\nMonster HP: " + str(weak_monster.strength))
-            spacer()
-            pause()
-
+    #checks to see if the monster has been slain
     if weak_monster.strength <= 0:
         print("\nThe monster has been slain!")
         print(f"\nRusty has {rustyhp} HP left.")
+    rustyfighthp = rustyhp
+    return(rustyfighthp)
+    
+
+def portal(rustyfighthp):
+    spacer()
+    print(f"Rusty's remaining HP: {rustyfighthp} HP")
+    pause()
+    
+    if rustyfighthp > 0:
+        print("\nRusty steps through the portal, still recovering from the battle. The air hums with magic as he is transported to another realm.")
+        
+    else:
+        print("\nRusty collapses before the portal, seemingly unable to continue.")
+        print("\nJust as Rusty is about to lose consciousness, a figure appears before him.")
+        print("\n'You have shown great courage,' the figure says. 'I will help you.'")
+        print("\nRusty feels a warm light envelop him, and he feels a little bit of strength come to him.")
+        rustyfighthp += 5
+        print(f"\nRusty's HP: {rustyfighthp}")
+        print("\nRusty stands up, feeling renewed.")
+    spacer()
+    pause()
+    print("\nRusty finds himself in a lush forest, the air filled with the scent of flowers and the sound of birdsong.")
+    print("\nHe sees a path ahead, and the sun is shining through the trees.")
+    print("\nWhat do you do?")
+    print("\nA. Follow the path. \nB. Explore the forest.")
+    while True:
+        pathchoice = input().lower()
+        if pathchoice == "a":
+            follow_path()
+            break
+        elif pathchoice == "b":
+            explore_forest()
+            break
+        else:
+            print("Rusty doesn't understand! Please choose 'A' or 'B'.")
+
+def follow_path():
+
+def explore_forest():
+
 
 #MAIN PROGRAM
 def main():
